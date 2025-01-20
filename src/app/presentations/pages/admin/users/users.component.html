@@ -1,0 +1,81 @@
+<div class="client-list">
+  <header class="mb-6">
+    <h2 class="text-3xl font-semibold text-gray-800">Gestion des amazoness ({{ userNumber }})</h2>
+  </header>
+
+  <main>
+
+    <div class="ml-3 text-right">
+      <p-dropdown id="statusFilter" [(ngModel)]="statusFilter" (onChange)="filterUsers()"
+        [options]="statusOptions" placeholder="Sélectionner un statut" [style]="{'width': '250px'}"></p-dropdown>
+    </div>
+    <p-table #dt2 [value]="filteredUsers" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading" [paginator]="true" [globalFilterFields]="['username']"
+      [tableStyle]="{ 'min-width': '75rem' }">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-between">
+          <!-- Left side (Search field) -->
+          <p-iconField iconPosition="left" class="ml-auto">
+            <p-inputIcon>
+              <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input pInputText type="text" placeholder="Mot clé de recherche" (input)="filterGlobalValue($event)" />
+          </p-iconField>
+
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:22%">Nom</th>
+          <th style="width:22%">Prénoms</th>
+          <th style="width:22%">Username</th>
+          <th style="width:22%; text-align: center" colspan="2">Actions</th>
+        </tr>
+        <tr>
+          <th><p-columnFilter type="text" field="last_name" placeholder="Rechercher par nom"></p-columnFilter></th>
+          <th><p-columnFilter type="text" field="first_name" placeholder="Rechercher par prénom"></p-columnFilter>
+          </th>
+          <th><p-columnFilter type="text" field="username" placeholder="Rechercher par username"></p-columnFilter>
+          </th>
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.username }}</td>
+          <td><button (click)="viewClientDetails(user)">Voir Détails</button></td>
+          <td>
+            <ng-container *ngIf="user.is_active">
+              <button class="btn btn-danger w-100" (click)="confirm($event, user)">Désactivé</button>
+            </ng-container>
+            <ng-container *ngIf="!user.is_active">
+              <button class="btn btn-success w-100" (click)="confirm($event, user)">Activé</button>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" style="text-align: center; font-weight: bold">Aucun client trouvé.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </main>
+
+  <section *ngIf="selectedUser" class="client-details">
+    <h3>Détails de l'utilisateur</h3>
+    <p><strong>Nom :</strong> {{ selectedUser.first_name }} {{ selectedUser.last_name }}</p>
+    <p><strong>Username :</strong> {{ selectedUser.username }}</p>
+    <p><strong>Email :</strong> {{ selectedUser.email }}</p>
+
+    <button (click)="viewClientDetails(selectedUser)">Fermer</button>
+  </section>
+</div>
+
+

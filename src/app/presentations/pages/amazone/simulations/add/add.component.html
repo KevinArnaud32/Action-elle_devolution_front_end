@@ -1,0 +1,121 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Créer une Simulation</h2>
+  <form [formGroup]="simulationForm" (ngSubmit)="submitForm()">
+    <div class="row">
+      <!-- Category -->
+      <div class="form-group col-12 col-md-6">
+        <label for="category">Catégorie</label>
+        <select
+          id="category"
+          class="form-control"
+          formControlName="category"
+          [ngClass]="{'is-invalid': simulationForm.get('category')?.invalid && simulationForm.get('category')?.touched}">
+          <option value="">-- Sélectionner une catégorie --</option>
+          <option *ngFor="let item of categories" [value]="item.id">{{ item.libelle }}</option>
+        </select>
+        <div *ngIf="simulationForm.get('category')?.invalid && simulationForm.get('category')?.touched" class="invalid-feedback">
+          La catégorie est obligatoire.
+        </div>
+      </div>
+
+      <!-- Puissance Fiscale -->
+      <div class="form-group col-12 col-md-6">
+        <label for="puissance_fiscale">Puissance Fiscale</label>
+        <input
+          type="number"
+          id="puissance_fiscale"
+          class="form-control"
+          formControlName="puissance_fiscale"
+          [ngClass]="{'is-invalid': simulationForm.get('puissance_fiscale')?.invalid && simulationForm.get('puissance_fiscale')?.touched}">
+        <div *ngIf="simulationForm.get('puissance_fiscale')?.invalid && simulationForm.get('puissance_fiscale')?.touched" class="invalid-feedback">
+          La puissance fiscale est obligatoire et doit être supérieure à 0.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Valeur Vénale -->
+      <div class="form-group col-12 col-md-6">
+        <label for="valeur_venale">Valeur Vénale</label>
+        <input
+          type="number"
+          id="valeur_venale"
+          class="form-control"
+          formControlName="valeur_venale"
+          [ngClass]="{'is-invalid': simulationForm.get('valeur_venale')?.invalid && simulationForm.get('valeur_venale')?.touched}">
+        <div *ngIf="simulationForm.get('valeur_venale')?.invalid && simulationForm.get('valeur_venale')?.touched" class="invalid-feedback">
+          La valeur vénale est obligatoire et doit être supérieure à 0.
+        </div>
+      </div>
+
+      <!-- Valeur Neuve -->
+      <div class="form-group col-12 col-md-6">
+        <label for="valeur_neuve">Valeur Neuve</label>
+        <input
+          type="number"
+          id="valeur_neuve"
+          class="form-control"
+          formControlName="valeur_neuve"
+          [ngClass]="{'is-invalid': simulationForm.get('valeur_neuve')?.invalid && simulationForm.get('valeur_neuve')?.touched}">
+        <div *ngIf="simulationForm.get('valeur_neuve')?.invalid && simulationForm.get('valeur_neuve')?.touched" class="invalid-feedback">
+          La valeur neuve est obligatoire et doit être supérieure à 0.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Type Produit Assurance -->
+      <div class="form-group col-12 col-md-6">
+        <label for="type_produitAssurance">Type de Produit d'Assurance</label>
+        <select
+          id="type_produitAssurance"
+          class="form-control"
+          formControlName="type_produitAssurance"
+          [ngClass]="{'is-invalid': simulationForm.get('type_produitAssurance')?.invalid && simulationForm.get('type_produitAssurance')?.touched}">
+          <option value="">-- Sélectionner un produit --</option>
+          <option value="Papillon">Papillon</option>
+          <option value="Douby">Douby</option>
+          <option value="Douyou">Douyou</option>
+          <option value="Toutourisquou">Toutourisquou</option>
+        </select>
+        <div *ngIf="simulationForm.get('type_produitAssurance')?.invalid && simulationForm.get('type_produitAssurance')?.touched" class="invalid-feedback">
+          Le type de produit est obligatoire.
+        </div>
+      </div>
+
+      <!-- Année du Véhicule -->
+      <div class="form-group col-12 col-md-6">
+        <label for="annee_vehicule">Année du Véhicule</label>
+        <input
+          type="number"
+          id="annee_vehicule"
+          class="form-control"
+          formControlName="annee_vehicule"
+          [ngClass]="{'is-invalid': simulationForm.get('annee_vehicule')?.invalid && simulationForm.get('annee_vehicule')?.touched}">
+        <div *ngIf="simulationForm.get('annee_vehicule')?.invalid && simulationForm.get('annee_vehicule')?.touched" class="invalid-feedback">
+          L'année du véhicule est obligatoire et doit être valide.
+        </div>
+      </div>
+    </div>
+
+    <!-- Bouton Centré -->
+    <div class="text-center mt-4">
+      <button type="submit" class="btn btn-primary" [disabled]="simulationForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Chargement...' : 'Créer Simulation' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Dialog -->
+<p-dialog header="Détails de la simulation" [(visible)]="retour" [modal]="true" [closable]="true" [style]="{width: '50vw'}">
+  <div *ngIf="simulation">
+    <div><strong>Référence :</strong> {{ simulation.quoteReference }}</div>
+    <div><strong>Date de création :</strong> {{ simulation.date_creation | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+    <div><strong>Produit :</strong> {{ simulation.type_produitAssurance }}</div>
+    <div><strong>Puissance fiscale :</strong> {{ simulation.puissance_fiscale }}</div>
+    <div><strong>Valeur vénale :</strong> {{ simulation.valeur_venale }}</div>
+    <div><strong>Prix :</strong> {{ simulation.price }} F CFA</div>
+    <div><strong>Date de fin :</strong> {{ simulation.endDate ? (simulation.endDate | date:'dd/MM/yyyy HH:mm:ss') : 'N/A' }}</div>
+  </div>
+</p-dialog>

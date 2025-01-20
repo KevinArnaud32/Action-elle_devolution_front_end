@@ -1,0 +1,20 @@
+.custom-card {
+  flex: 1; /* Permet aux cartes de s'étendre uniformément */
+  margin: 0 10px; /* Ajoute de l'espace entre les cartes */
+  padding: 20px; /* Ajoute du rembourrage à l'intérieur de la carte */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  transition: transform 0.3s; /* Effet de transition */
+  background-color: #fff; /* Couleur de fond */
+}
+
+.custom-card:hover {
+  transform: translateY(-5px); /* Effet de soulèvement au survol */
+}
+
+.card-value {
+  color: #4CAF50; /* Couleur du texte pour les valeurs */
+  font-weight: bold; /* Texte en gras */
+  font-size: 2rem; /* Taille de police plus grande */
+  text-align: center; /* Centrer le texte */
+}

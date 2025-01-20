@@ -1,0 +1,50 @@
+<!-- Table with the simulations -->
+<div class="mb-4">
+  <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()" text />
+  <p-button type="button" icon="pi pi-refresh" (click)="reset()" text />
+  <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()" text />
+</div>
+
+<div class="card">
+  <p-table
+      [value]="simulations"
+      [paginator]="true"
+      [rows]="5"
+      [first]="first"
+      [showCurrentPageReport]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      (onPage)="pageChange($event)"
+      [rowsPerPageOptions]="[10, 25, 50]"
+  >
+      <ng-template #header>
+          <tr>
+              <th style="width:25%">Reference</th>
+              <th style="width:25%">Date de creation</th>
+              <th style="width:25%">Produit</th>
+              <th style="width:25%"> Action </th>
+          </tr>
+      </ng-template>
+      <ng-template #body let-simulation>
+          <tr>
+              <td>{{ simulation.quoteReference }}</td>
+              <td>{{ simulation.date_creation | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+              <td>{{ simulation.type_produitAssurance }}</td>
+              <td><button (click)="voirDetail(simulation)">Voir détail</button></td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>
+
+<!-- Modal for simulation details -->
+<p-dialog header="Détails de la simulation" [(visible)]="detail" [modal]="true" [closable]="true" [style]="{width: '50vw'}">
+  <div *ngIf="simulation">
+    <div><strong>Référence :</strong> {{ simulation.quoteReference }}</div>
+    <div><strong>Date de création :</strong> {{ simulation.date_creation | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+    <div><strong>Produit :</strong> {{ simulation.type_produitAssurance }}</div>
+    <div><strong>Puissance fiscale :</strong> {{ simulation.puissance_fiscale }}</div>
+    <div><strong>Valeur vénale :</strong> {{ simulation.valeur_venale }}</div>
+    <div><strong>Prix :</strong> {{ simulation.price}} FCFA</div>
+    <div><strong>Date de fin :</strong> {{ simulation.endDate ? (simulation.endDate | date:'dd/MM/yyyy HH:mm:ss') : 'N/A' }}</div>
+  </div>
+</p-dialog>

@@ -1,0 +1,29 @@
+.text-summary {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.text-summary p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.text-summary ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.text-summary ul li {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.text-summary strong {
+  color: #333;
+}

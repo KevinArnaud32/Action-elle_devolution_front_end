@@ -1,0 +1,179 @@
+<div class="container mt-5">
+  <!-- Étape 1 : Informations sur le véhicule -->
+  <div *ngIf="step === 1">
+    <h3 class="mb-4">Étape 1 : Informations sur le véhicule</h3>
+    <form [formGroup]="formSubscription" class="needs-validation" novalidate>
+      <div formGroupName="vehicle" class="row g-3">
+        <div class="col-md-6">
+          <label for="immatriculation" class="form-label">Immatriculation</label>
+          <input id="immatriculation" formControlName="immatriculation" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('vehicle.immatriculation')?.invalid && formSubscription.get('vehicle.immatriculation')?.touched }" />
+          <div class="invalid-feedback">L'immatriculation est obligatoire.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="couleur" class="form-label">Couleur</label>
+          <input id="couleur" formControlName="couleur" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('vehicle.couleur')?.invalid && formSubscription.get('vehicle.couleur')?.touched }" />
+          <div class="invalid-feedback">La couleur est obligatoire.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="puissance_fiscale" class="form-label">Puissance Fiscale</label>
+          <input id="puissance_fiscale" formControlName="puissance_fiscale" type="number" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('vehicle.puissance_fiscale')?.invalid && formSubscription.get('vehicle.puissance_fiscale')?.touched }" />
+          <div class="invalid-feedback">La puissance fiscale est obligatoire et doit être supérieure à 0.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="date_premiere_mise_en_circulation" class="form-label">Date de Première Mise en Circulation</label>
+          <input id="date_premiere_mise_en_circulation" formControlName="date_premiere_mise_en_circulation" type="date"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('vehicle.date_premiere_mise_en_circulation')?.invalid && formSubscription.get('vehicle.date_premiere_mise_en_circulation')?.touched }" />
+          <div class="invalid-feedback">La date est obligatoire.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="category" class="form-label">Catégorie</label>
+          <select id="category" class="form-control" formControlName="category"
+            [ngClass]="{'is-invalid': formSubscription.get('category')?.invalid && formSubscription.get('category')?.touched}">
+            <option value="">-- Sélectionner une catégorie --</option>
+            <option *ngFor="let item of categories" [value]="item.id">{{ item.libelle }}</option>
+          </select>
+        </div>
+        <div class="invalid-feedback">La catégorie est obligatoire.</div>
+        <div class="mt-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-primary" (click)="nextStep()"
+            [disabled]="formSubscription.get('vehicle')?.invalid">
+            Suivant
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Étape 2 : Informations personnelles -->
+  <div *ngIf="step === 2">
+    <h3 class="mb-4">Étape 2 : Informations personnelles</h3>
+    <form [formGroup]="formSubscription" class="needs-validation" novalidate>
+      <div formGroupName="person" class="row g-3">
+        <div class="col-md-6">
+          <label for="nom" class="form-label">Nom</label>
+          <input id="nom" formControlName="nom" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('person.nom')?.invalid && formSubscription.get('person.nom')?.touched }" />
+          <div class="invalid-feedback">Le nom est obligatoire.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="prenom" class="form-label">Prénom</label>
+          <input id="prenom" formControlName="prenom" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('person.prenom')?.invalid && formSubscription.get('person.prenom')?.touched }" />
+          <div class="invalid-feedback">Le prénom est obligatoire.</div>
+        </div>
+
+        <div class="col-md-12">
+          <label for="adresse" class="form-label">Adresse</label>
+          <input id="adresse" formControlName="adresse" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('person.adresse')?.invalid && formSubscription.get('person.adresse')?.touched }" />
+          <div class="invalid-feedback">L'adresse est obligatoire.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="telephone" class="form-label">Téléphone</label>
+          <input id="telephone" formControlName="telephone" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('person.telephone')?.invalid && formSubscription.get('person.telephone')?.touched }" />
+          <div class="invalid-feedback">Le numéro de téléphone est obligatoire et doit être valide.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input id="email" formControlName="email" type="email" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('person.email')?.invalid && formSubscription.get('person.email')?.touched }" />
+          <div class="invalid-feedback">L'email est obligatoire et doit être valide.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="ville" class="form-label">Ville</label>
+          <input id="ville" formControlName="ville" type="text" class="form-control"
+            [ngClass]="{ 'is-invalid': formSubscription.get('person.ville')?.invalid && formSubscription.get('person.ville')?.touched }" />
+          <div class="invalid-feedback">La ville est obligatoire.</div>
+        </div>
+      </div>
+      <div class="mt-4 d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="prevStep()">Précédent</button>
+        <button type="button" class="btn btn-primary" (click)="nextStep()"
+          [disabled]="formSubscription.get('person')?.invalid">
+          Suivant
+        </button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="step === 3">
+    <h3>Choisir un produit et un statut</h3>
+    <form [formGroup]="formSubscription">
+      <div class="form-group">
+        <label>Produit</label>
+        <select id="produit" class="form-control" formControlName="produit"
+          [ngClass]="{'is-invalid': formSubscription.get('produit')?.invalid && formSubscription.get('produit')?.touched}">
+          <option value="">-- Sélectionner un produit --</option>
+          <option value="Papillon">Papillon</option>
+          <option value="Douby">Douby</option>
+          <option value="Douyou">Douyou</option>
+          <option value="Toutourisquou">Toutourisquou</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Statut</label>
+        <select id="type_produitAssurance" class="form-control" formControlName="statut"
+          [ngClass]="{'is-invalid': formSubscription.get('statut')?.invalid && formSubscription.get('statut')?.touched}">
+          <option value="">-- Sélectionner un statut --</option>
+          <option value="payee">Payé</option>
+          <option value="enattente">En attente</option>
+        </select>
+      </div>
+    </form>
+    <div class="mt-4 d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary" (click)="prevStep()">Précédent</button>
+      <button type="button" class="btn btn-primary" (click)="nextStep()"
+        [disabled]="formSubscription.get('produit')?.invalid || formSubscription.get('statut')?.invalid">
+        Suivant
+      </button>
+    </div>
+  </div>
+
+  <!-- Étape 4: Récapitulatif -->
+  <div *ngIf="step === 4">
+    <h3>Récapitulatif</h3>
+
+    <div class="text-summary">
+      <p><strong>Véhicule :</strong></p>
+      <ul>
+        <li><strong>Immatriculation :</strong> {{ formSubscription.value.vehicle.immatriculation }}</li>
+        <li><strong>Couleur :</strong> {{ formSubscription.value.vehicle.couleur }}</li>
+        <li><strong>Puissance Fiscale :</strong> {{ formSubscription.value.vehicle.puissance_fiscale }}</li>
+        <li><strong>Date de Première Mise en Circulation :</strong> {{
+          formSubscription.value.vehicle.date_premiere_mise_en_circulation }}</li>
+        <li><strong>Catégorie :</strong> {{ formSubscription.value.vehicle.category }}</li>
+      </ul>
+
+      <p><strong>Personne :</strong></p>
+      <ul>
+        <li><strong>Nom :</strong> {{ formSubscription.value.person.nom }}</li>
+        <li><strong>Prénom :</strong> {{ formSubscription.value.person.prenom }}</li>
+        <li><strong>Adresse :</strong> {{ formSubscription.value.person.adresse }}</li>
+        <li><strong>Téléphone :</strong> {{ formSubscription.value.person.telephone }}</li>
+        <li><strong>Email :</strong> {{ formSubscription.value.person.email }}</li>
+        <li><strong>Ville :</strong> {{ formSubscription.value.person.ville }}</li>
+      </ul>
+
+      <p><strong>Produit :</strong> {{ formSubscription.value.produit }}</p>
+      <p><strong>Statut :</strong> {{ formSubscription.value.statut }}</p>
+    </div>
+    <div class="mt-4 d-flex justify-content-between">
+      <button class="btn btn-secondary mt-3" (click)="prevStep()">Précédent</button>
+      <button class="btn btn-success mt-3" [disabled]="formSubscription.invalid" (click)="save()">Enregistrer</button>
+      <button class="btn btn-danger mt-3" (click)="cancel()">Annuler</button>
+    </div>
+  </div>
+
+</div>

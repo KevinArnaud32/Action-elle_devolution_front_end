@@ -1,0 +1,50 @@
+<!-- Main Navigation -->
+<header>
+  <!-- Sidebar -->
+  <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
+    <div class="position-sticky d-flex flex-column" style="height: 90vh">
+      <div class="list-group list-group-flush mx-3 mt-4">
+        <a routerLink="/admin/home" routerLinkActive="active"
+          class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+        </a>
+        <a routerLink="/admin/users" routerLinkActive="active"
+          class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Users</span>
+        </a>
+      </div>
+
+      <div class="mt-auto">
+        <button type="button" class="btn btn-outline-secondary w-100" (click)="logout()">Deconnexion</button>
+      </div>
+    </div>
+
+  </nav>
+  <!-- Sidebar -->
+
+  <!-- Navbar -->
+  <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+        aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Title -->
+      <span class="navbar-text me-auto">
+        <i class="fas fa-user me-2"></i>ActionElle
+      </span>
+    </div>
+  </nav>
+  <!-- Navbar -->
+</header>
+<!-- Main Navigation -->
+
+<!-- Main layout -->
+<main style="margin-top: 58px;">
+  <div class="container pt-4">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+<!-- Main layout -->
